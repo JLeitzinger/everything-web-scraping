@@ -4,13 +4,26 @@ To check if your implementation is correct run test.py
 *NOTE: Don't change the method names, as that's what's used in the tester.
         but, feel free to add anything else to test and debug your code.
 """
+import requests
 
 def extract_feed():
     """
         Return an array of all the post objects on the feed page.
     """
+    feedList = []
+    page = 0
 
-    return []
+    while True:
+        r = requests.get(f"http://localhost:8000/feed/{page}")
+        page+=1
+        newPage = r.json()['posts']
+
+        if len(newPage) == 0:
+            break
+
+        else: feedList.extend(newPage)
+
+    return feedList
 
 def extract_emails():
     """
